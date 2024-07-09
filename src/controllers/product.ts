@@ -33,6 +33,8 @@ export const newProduct = TryCatch(
       photo: photo?.path,
     });
 
+    await invalidateCache({ product: true, admin: true });
+
     return res.status(200).json({
       success: true,
       message: "Product Created Successfully",
@@ -103,7 +105,7 @@ export const getSingleProduct = TryCatch(async (req, res, next) => {
     myCache.set(`product-${id}`, JSON.stringify(product));
   }
 
-  invalidateCache({ product: true });
+  invalidateCache({ product: true, admin: true });
 
   return res.status(200).json({
     success: true,
