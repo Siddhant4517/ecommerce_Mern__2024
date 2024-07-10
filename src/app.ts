@@ -12,6 +12,7 @@ import paymentRoute from "./routes/payment.js";
 import dashboardRoute from "./routes/stats.js";
 import morgan from "morgan";
 import Stripe from "stripe";
+import path from "path";
 
 config({
   path: "./.env",
@@ -29,6 +30,9 @@ export const myCache = new nodeCache();
 // Middleware to handle CORS
 
 const app = express();
+
+// Serve static files from the .well-known directory
+app.use("/.well-known", express.static(path.join(__dirname, ".well-known")));
 
 app.use(express.json());
 app.use(morgan("dev"));
