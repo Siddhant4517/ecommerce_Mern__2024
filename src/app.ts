@@ -31,9 +31,6 @@ export const myCache = new nodeCache();
 
 const app = express();
 
-// Serve static files from the .well-known directory
-app.use("/.well-known", express.static(path.join(__dirname, ".well-known")));
-
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
@@ -41,6 +38,9 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Api Working");
 });
+
+// Serve static files from the .well-known directory
+app.use("/.well-known", express.static(path.join(__dirname, ".well-known")));
 
 //Using Routes
 app.use("/api/v1/user", userRoute);
