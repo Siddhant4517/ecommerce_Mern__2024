@@ -9,6 +9,7 @@ const stripe = new Stripe(
     apiVersion: "2024-04-10",
   }
 );
+
 export const createPaymentIntent = TryCatch(async (req, res, next) => {
   const { amount } = req.body;
 
@@ -17,6 +18,7 @@ export const createPaymentIntent = TryCatch(async (req, res, next) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: Number(amount) * 100,
     currency: "inr",
+    payment_method_types: ["card"], // Specify only the card payment method
   });
 
   return res.status(201).json({
@@ -69,6 +71,6 @@ export const deleteCoupon = TryCatch(async (req, res, next) => {
 
   return res.status(200).json({
     success: true,
-    meassage: `Coupon ${coupon.code} Deleted Successfully`,
+    message: `Coupon ${coupon.code} Deleted Successfully`, // Fixed typo
   });
 });
